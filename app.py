@@ -27,23 +27,32 @@ async def random():
     data = []
     for i in quotes:
 
-      author:str = i.find('a',)['href']
+      # temp data
+      idata = {}
 
-      quote:str = i.find('h3', {
+      # tags
+      author = i.find('a',)
+
+      quote = i.find('h3', {
         'class':'title both-center'
-      }).text
+      })
 
-      view:str = i.find('span', {
+      view = i.find('span', {
         'class':'view_count'
-      }).text
+      })
+      
+      # fill data
+      if author:
+        print(author)
+        idata['author'] = author['href']    
+        
+      if quote:
+        idata['quote'] = str(quote.text).strip()
 
-      data.append(
-        {
-          "author":author.strip(),
-          "quote":quote.strip(),
-          "view":view.strip(),
-        }
-      )
+      if view:
+        idata['view'] = view.text
+
+      data.append(idata)
 
     return data
 
